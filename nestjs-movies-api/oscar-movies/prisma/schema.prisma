@@ -11,28 +11,53 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  birthDate String
-  password  String
-  imageLink String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                   String   @id @default(uuid())
+  name                 String
+  email                String   @unique
+  birthDate            String
+  password             String
+  imageLink            String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 }
 
 model Movie {
-  id            String   @id @default(uuid())
-  originalTitle String   @unique
+  id            Int        @id @default(autoincrement())
+  originalTitle String     @unique
   brTitle       String
-  duration      String
-  genre         String
-  year          String
+  duration      Float
+  year          Int
   coverLink     String
   synopsis      String
-  director      String
-  cast          String
-  watched       Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  cast          Cast[]
+  watched       Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  director      Director[]
+  genre         Genre[]
+  producer      Producer[]
+}
+
+model Director {
+  id     Int     @id @default(autoincrement())
+  name   String
+  movies Movie[]
+}
+
+model Genre {
+  id     Int     @id @default(autoincrement())
+  name   String
+  movies Movie[]
+}
+
+model Cast {
+  id     Int     @id @default(autoincrement())
+  name   String
+  movies Movie[]
+}
+
+model Producer {
+  id     Int     @id @default(autoincrement())
+  name   String
+  movies Movie[]
 }

@@ -29,8 +29,8 @@ import {
         throw new ConflictException('This email already exists');
       }
   
-      const times = 10;
-      const passwordHash = await bcrypt.hash(userdata.password, times);
+      const rounds = 10;
+      const passwordHash = await bcrypt.hash(userdata.password, rounds);
   
       delete userdata.passwordConfirmation;
   
@@ -96,4 +96,6 @@ import {
         message: 'Successfully deleted',
       };
     }
+
+    
   }

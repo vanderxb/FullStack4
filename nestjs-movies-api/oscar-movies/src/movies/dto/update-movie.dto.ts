@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class UpdateMovieDto {
   @IsString()
@@ -11,3 +11,4 @@ export class UpdateMovieDto {
   @IsNotEmpty()
   coverImage: string;
 }
+

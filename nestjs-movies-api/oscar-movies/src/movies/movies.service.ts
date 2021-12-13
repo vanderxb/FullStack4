@@ -26,7 +26,7 @@ export class MoviesService {
     return movies;
   }
 
-  async findOne(id: string): Promise<Movie> {
+  async findOne(id: number): Promise<Movie> {
     const movieExists = await this.database.movie.findUnique({
       where: { id },
     });
@@ -40,7 +40,7 @@ export class MoviesService {
     return movieExists;
   }
 
-  async update(id: string, updateMovieDto: UpdateMovieDto): Promise<Movie> {
+  async update(id: number, updateMovieDto: UpdateMovieDto): Promise<Movie> {
     const movie = await this.database.movie.update({
       data: updateMovieDto,
       where: { id },
@@ -48,7 +48,7 @@ export class MoviesService {
     return movie;
   }
 
-  async remove(id: string): Promise<{ message: string }> {
+  async remove(id: number): Promise<{ message: string }> {
     const movieExists = await this.database.movie.findUnique({
       where: { id },
     });
@@ -64,5 +64,22 @@ export class MoviesService {
     }
 
     return { message: 'Movie successfully deleted' };
+  }
+
+  async updatewatched(id: number): Promise<Movie> {
+    const watchedmovie = await this.database.movie.findUnique({
+      where: {id}
+    })
+
+    const modify = !watchedmovie.watched
+   
+    const movie = await this.database.movie.update({
+      where: { id },
+      data: {...watchedmovie,
+                watched: modify
+      }
+    
+    });
+    return movie;
   }
 }

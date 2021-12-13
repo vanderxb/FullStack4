@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { MoviesService } from './movies.service'
 import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
+import { UpdateMovieDto} from './dto/update-movie.dto';
 import { Movie } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -33,7 +33,7 @@ export class MoviesController {
   @UseGuards(AuthGuard())
   @Get('find-one/:id')
   findOne(@Param('id') id: string): Promise<Movie> {
-    return this.movieService.findOne(id);
+    return this.movieService.findOne(parseInt(id));
   }
 
   @UseGuards(AuthGuard())
@@ -42,12 +42,19 @@ export class MoviesController {
     @Param('id') id: string,
     @Body() updateMovieDto: UpdateMovieDto,
   ): Promise<Movie> {
-    return this.movieService.update(id, updateMovieDto);
+    return this.movieService.update(parseInt(id), updateMovieDto);
   }
 
   @UseGuards(AuthGuard())
   @Delete('delete/:id')
   remove(@Param('id') id: string): Promise<{ message: string }> {
-    return this.movieService.remove(id);
+    return this.movieService.remove(parseInt(id));
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch('watched/:id')
+  updatewatched(
+    @Param('id') id: string ): Promise<Movie> {
+    return this.movieService.updatewatched(parseInt(id));
   }
 }
